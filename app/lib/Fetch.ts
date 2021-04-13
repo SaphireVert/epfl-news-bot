@@ -16,6 +16,8 @@ export class Fetch {
     async getUrlList() {
         const jsonObj = await (await nodeFetch('https://actu.epfl.ch/api/v1/news/')).json();
         var urlsList = "";
+        console.log(jsonObj);
+        
         for (let i = 0; i < jsonObj.results.length; i++) {
             const element = jsonObj.results[i].news_url;
             urlsList = urlsList + element + "\n";

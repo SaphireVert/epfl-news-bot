@@ -1,25 +1,28 @@
 import { Telegraf } from 'telegraf';
 import { Fetch } from "./lib/Fetch";
 import { Layout } from "./lib/Layout";
+import { BotCommand } from "./lib/BotCommand";
 
 const fetch = new Fetch();
 const layout = new Layout();
-
-// fetch.getUrl();
-// fetch.getUrl();
-
-
+const botCommand = new BotCommand();
 import secrets from './secrets.json';
-
 const bot = new Telegraf(secrets.BOT_TOKEN);
-bot.hears('/getNews', async (ctx) => ctx.reply(await fetch.getUrlList()));
-bot.start((ctx) => ctx.reply('Welcome to Epfl-News-Bot ! \nType /getTheLastNews to get the last news !\n'));
-bot.help((ctx) => ctx.reply('Welcome to Epfl-News-Bot ! \nType /getTheLastNews to get the last news !'));
-bot.on('sticker', (ctx) => ctx.reply('👍'));
-bot.hears('hi', (ctx) => ctx.reply('Hey there'));
-bot.launch();
 
+async function main () {
+    const botInfos = await bot.telegram.getMe();
+    bot.hears(new RegExp(`(^\/latest)(@${botInfos.username})?\s?(.+)?$`), async (ctx) => {
+        let props = ctx.update.message.text.split(" ");
+        console.log(props);
+        let count = parseInt(props[1]);
+        ctx.reply(await botCommand.latest("auto", count));
+    });
+    bot.start((ctx) => ctx.reply('Welcome to EPFL-News-Bot ! \nType /getTheLastNews to get the last news !\n'));
+    bot.launch();
+}
+
+main();
 
 // Enable graceful stop
-// process.once('SIGINT', () => bot.stop('SIGINT'));
-// process.once('SIGTERM', () => bot.stop('SIGTERM'));
+process.once('SIGINT', () => bot.stop('SIGINT'));
+process.once('SIGTERM', () => bot.stop('SIGTERM'));

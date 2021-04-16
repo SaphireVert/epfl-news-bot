@@ -1,2 +1,2 @@
-start:
+up:
     cd app && npm start

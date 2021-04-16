@@ -1,10 +1,10 @@
 export class Layout {
 
     async buildLayout (dataObj: any, format?: string, count?: number) {
-        console.log(`format value is: ${format} and count value is ${count}`);
+        // console.log(`format value is: ${format} and count value is ${count}`);
 
         if (typeof count == 'undefined' || isNaN(count)) {
-            console.log("count is undefined");
+            // console.log("count is undefined");
             count = 10;
         }
         
@@ -28,14 +28,14 @@ export class Layout {
                 }
             }
         } else {
-            console.log("format is undefined");
+            // console.log("format is undefined");
             return await this.autoLayout(dataObj, count);
         }
     }
 
     private async autoLayout(dataObj: any, count: number) {
-        console.log("auto layout");
-        console.log(count);
+        // console.log("auto layout");
+        // console.log(count);
         let maxEntry: number = 5;
         if (count == 0) {
             console.error("No entry in dataObj...");
@@ -49,7 +49,7 @@ export class Layout {
     }
 
     private async fullLayout(dataObj: any, count: number) {
-        console.log("full layout");
+        // console.log("full layout");
         var urlsList = "";
         for (let i = 0; i < count; i++) {
             const element = dataObj.results[i].news_url;
@@ -59,7 +59,7 @@ export class Layout {
     }
 
     private async digestLayout(dataObj: any, count: number) {
-        console.log("digest layout");
+        // console.log("digest layout");
         
         var urlsList = "";
         for (let i = 0; i < count; i++) {

@@ -13,7 +13,6 @@ async function main () {
     const botInfos = await bot.telegram.getMe();
     bot.hears(new RegExp(`(^\/latest)(@${botInfos.username})?\s?(.+)?$`), async (ctx) => {
         let props = ctx.update.message.text.split(" ");
-        console.log(props);
         let count = parseInt(props[1]);
         ctx.reply(await botCommand.latest("auto", count));
     });
